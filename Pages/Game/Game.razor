@@ -20,7 +20,9 @@
     <div class="grid">
         @foreach (var item in Squares)
         {
-            <div>@(item != 0 ? item : "")</div>
+            <div style="color:@GetColor(item);background: @GetBgColor(item)">
+                @(item != 0 ? item : "")
+            </div>
         }
     </div>
 </div>
@@ -247,4 +249,45 @@
         IsWin = Squares.Any(x => x >= TargetScore);
     }
 
+    private string GetBgColor(int value)
+    {
+        if (value >= 2048) return "#EFCB53";
+        switch (value)
+        {
+            case 2:
+                return "#DCD5D3";
+            case 4:
+                return "#E3DD8A";
+            case 8:
+                return "#F2AC34";
+            case 16:
+                return "#F99B19";
+            case 32:
+                return "#EE6915";
+            case 64:
+                return "#FB4D19";
+            case 128:
+                return "#F4D155";
+            case 256:
+                return "#EBD045";
+            case 512:
+                return "#E5C236";
+            case 1024:
+                return "#E3BC16";
+            default:
+                return "#A5A5A5";
+        }
+    }
+
+    private string GetColor(int value)
+    {
+        if (value == 2) return "#494846";
+        else if (value == 4) return "#5E4D3F";
+        else if (value == 8) return "#D6D8D6";
+        else if (value == 16) return "#E7F8FF";
+        else if (value == 32) return "#DCEEFD";
+        else if (value == 64) return "#F3E8D4";
+        else if (value >= 128) return "#EBEAEA";
+        else return "#A5A5A5";
+    }
 }
