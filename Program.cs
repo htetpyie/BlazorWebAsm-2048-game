@@ -1,4 +1,4 @@
-using _2048_BlazorWebAsm;
+using BlazorWebAsm._2048Game;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
