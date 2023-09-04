@@ -177,7 +177,6 @@
 
     private void MoveUp()
     {
-        List<int> resultList = new();
         for (int gridIndex = 0; gridIndex < GridSize; gridIndex++)
         {
             var column = new List<int>();
@@ -190,11 +189,10 @@
             var zeroCount = column.Count(x => x == 0);
             var zeroList = Enumerable.Repeat(0, zeroCount).ToList();
             filteredColumn.AddRange(zeroList);
-            resultList.AddRange(filteredColumn);
 
             for (var i = 0; i < GridSize; i++)
             {
-                Squares[gridIndex + i * GridSize] = resultList[i];
+                Squares[gridIndex + i * GridSize] = filteredColumn[i];
             }
         }
 
@@ -202,9 +200,9 @@
 
     private void SumColumn()
     {
-        for(var i = 0; i< Squares.Count - GridSize; i++)
+        for (var i = 0; i < Squares.Count - GridSize; i++)
         {
-            if(Squares[i] == Squares[i + GridSize])
+            if (Squares[i] == Squares[i + GridSize])
             {
                 var combineResult = Squares[i] + Squares[i + GridSize];
                 Squares[i] = combineResult;
