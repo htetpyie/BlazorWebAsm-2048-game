@@ -86,7 +86,6 @@
         }
         else if (e.Key == EnumArrowKeys.ArrowRight.ToString())
         {
-            Console.WriteLine("Right");
             MoveRight();
             SumRow();
             GenerateTwo();
@@ -94,12 +93,13 @@
         }
         else if (e.Key == EnumArrowKeys.ArrowDown.ToString())
         {
-            Console.WriteLine("ArrowDown");
-
+            MoveDown();
+            SumColumn();
+            GenerateTwo();
+            MoveDown();
         }
         else if (e.Key == EnumArrowKeys.ArrowUp.ToString())
         {
-            Console.WriteLine("Up");
             MoveUp();
             SumColumn();
             GenerateTwo();
@@ -193,6 +193,29 @@
             for (var i = 0; i < GridSize; i++)
             {
                 Squares[gridIndex + i * GridSize] = filteredColumn[i];
+            }
+        }
+
+    }
+
+    private void MoveDown()
+    {
+        for (int gridIndex = 0; gridIndex < GridSize; gridIndex++)
+        {
+            var column = new List<int>();
+            for (int i = 0; i < GridSize; i++)
+            {
+                column.Add(Squares[gridIndex + GridSize * i]);
+            }
+
+            var filteredColumn = column.Where(x => x != 0).ToList();
+            var zeroCount = column.Count(x => x == 0);
+            var zeroList = Enumerable.Repeat(0, zeroCount).ToList();
+            zeroList.AddRange(filteredColumn);
+
+            for (var i = 0; i < GridSize; i++)
+            {
+                Squares[gridIndex + i * GridSize] = zeroList[i];
             }
         }
 
