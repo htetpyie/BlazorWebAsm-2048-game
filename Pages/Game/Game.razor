@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-<div class="game-container">
+<div class="game-container" tabindex="0" autofocus @onkeyup=Play>
 
     <div class="scoreContainer">
         <div class="header">2048 GAME</div>
@@ -23,7 +23,6 @@
             <div>@(item != 0 ? item : "")</div>
         }
     </div>
-
 </div>
 
 @code {
@@ -37,6 +36,11 @@
 
     private bool IsWin { get; set; }
     private bool IsLoose { get; set; }
+
+    private enum EnumArrowKeys
+    {
+        ArrowUp, ArrowDown, ArrowLeft, ArrowRight
+    };
 
     protected override void OnInitialized()
     {
@@ -53,9 +57,8 @@
     private void CreateBoard()
     {
         foreach (var item in Enumerable.Range(1, SquareSize))
-        {
             Squares.Add(0);
-        }
+
         GenerateTwo();
         GenerateTwo();
     }
@@ -68,11 +71,59 @@
             Squares[random] = 2;
             CheckLose();
         }
-        else
+        else GenerateTwo();
+    }
+
+    private void Play(KeyboardEventArgs e)
+    {
+        if (e.Key == EnumArrowKeys.ArrowLeft.ToString())
         {
-            GenerateTwo();
+            Console.WriteLine("Left");
+        }
+        else if (e.Key == EnumArrowKeys.ArrowRight.ToString())
+        {
+            Console.WriteLine("Right");
+            MoveRight();
+        }
+        else if (e.Key == EnumArrowKeys.ArrowDown.ToString())
+        {
+            Console.WriteLine("ArrowDown");
+
+        }
+        else if (e.Key == EnumArrowKeys.ArrowUp.ToString())
+        {
+            Console.WriteLine("Up");
         }
     }
+
+    private void MoveRight()
+    {
+        var resultList = new List<int>();
+        for (int gridIndex = 0; gridIndex < Squares.Count; gridIndex++)
+        {
+            var row = new List<int>();
+            if (gridIndex % GridSize == 0)
+            {
+                for (int i = 0; i < GridSize; i++)
+                {
+                    row.Add(Squares[gridIndex + i]);
+                }
+            }
+
+            var filteredRow = row.Where(x => x != 0).ToList();
+            var zeroCount = row.Count(x => x == 0);
+            var zeroList = Enumerable.Repeat(0, zeroCount).ToList();
+
+            zeroList.AddRange(filteredRow);
+
+            resultList.AddRange(zeroList);
+        }
+
+        Squares = resultList;
+
+        Console.WriteLine(Squares.ToString());
+    }
+
 
     private void CheckLose()
     {
