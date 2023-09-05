@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 
-namespace BlazorWebAsm._2048Game.Pages.Game
+namespace BlazorWebAsm.Game2048.Pages.Game
 {
     public partial class Game
     {
@@ -44,7 +44,6 @@ namespace BlazorWebAsm._2048Game.Pages.Game
         {
             if (e.Key == EnumArrowKeys.ArrowLeft.ToString())
             {
-                Console.WriteLine("Left");
                 MoveLeft();
                 SumRow();
                 GenerateTwo();
