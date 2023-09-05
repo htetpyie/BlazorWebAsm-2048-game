@@ -15,6 +15,8 @@ namespace BlazorWebAsm.Game2048.Pages.Game
         private bool IsWin { get; set; }
         private bool IsLoose { get; set; }
 
+        private Toast Toast { get; set; } = new Toast();
+
         private enum EnumArrowKeys
         {
             ArrowUp, ArrowDown, ArrowLeft, ArrowRight
@@ -205,6 +207,16 @@ namespace BlazorWebAsm.Game2048.Pages.Game
         private void CheckLose()
         {
             IsLoose = !Squares.Any(x => x == 0);
+            if (IsLoose)
+            {
+                Toast.ToastMessage="Game over !! You loose.";
+                Toast.ToastColor = "bg-danger";
+            }
+            if (IsWin)
+            {
+                Toast.ToastMessage = "Congratulation !! You win.";
+                Toast.ToastColor = "bg-secondary";
+            }
         }
 
         private void CheckWin()
@@ -253,5 +265,18 @@ namespace BlazorWebAsm.Game2048.Pages.Game
             else if (value >= 128) return "#EBEAEA";
             else return "#A5A5A5";
         }
+
+        private void CloseToast()
+        {
+            IsWin = false;
+            IsLoose = false;
+            CreateBoard();
+        }
+    }
+
+    public class Toast
+    {
+        public string ToastMessage{ get; set; }
+        public string ToastColor{ get; set; }
     }
 }
