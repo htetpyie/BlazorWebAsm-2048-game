@@ -24,6 +24,11 @@ namespace BlazorWebAsm.Game2048.Pages.Game
 
         private void CreateBoard()
         {
+            Squares = new();
+            Score = 0;
+            IsWin = false;
+            IsLoose = false;
+
             foreach (var item in Enumerable.Range(1, SquareSize))
                 Squares.Add(0);
 
