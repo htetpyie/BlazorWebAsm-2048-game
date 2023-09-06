@@ -7,7 +7,7 @@ namespace BlazorWebAsm.Game2048.Pages.Game
         public int GridSize { get; set; } = 4;
         public int TargetScore = 1024;
 
-        private List<int> Squares { get; set; } = new();
+        private List<int> Squares { get; set; }
 
         private int SquareSize { get => GridSize * GridSize; }
         private int Score { get; set; } = 0;
@@ -49,6 +49,8 @@ namespace BlazorWebAsm.Game2048.Pages.Game
 
         private void Play(KeyboardEventArgs e)
         {
+            if (IsLoose || IsWin) return;
+
             if (e.Key == EnumArrowKeys.ArrowLeft.ToString())
             {
                 MoveLeft();
@@ -214,7 +216,7 @@ namespace BlazorWebAsm.Game2048.Pages.Game
             IsLoose = !Squares.Any(x => x == 0);
             if (IsLoose)
             {
-                Toast.ToastMessage="Game over !! You loose.";
+                Toast.ToastMessage = "Game over !! You loose.";
                 Toast.ToastColor = "bg-danger";
             }
             if (IsWin)
@@ -273,15 +275,13 @@ namespace BlazorWebAsm.Game2048.Pages.Game
 
         private void CloseToast()
         {
-            IsWin = false;
-            IsLoose = false;
             CreateBoard();
         }
     }
 
     public class Toast
     {
-        public string ToastMessage{ get; set; }
-        public string ToastColor{ get; set; }
+        public string ToastMessage { get; set; }
+        public string ToastColor { get; set; }
     }
 }
